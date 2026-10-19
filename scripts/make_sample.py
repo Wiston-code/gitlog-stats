@@ -1,0 +1,35 @@
+"""Regenerate examples/sample_gitlog.txt with the field separators git uses.
+
+Run from the repository root:  python scripts/make_sample.py
+"""
+
+from __future__ import annotations
+
+import pathlib
+
+RECORD_SEP = "\x1e"
+FIELD_SEP = "\x1f"
+
+ROWS = [
+    ("8f3a1c2", "Wiston", "wiston@example.com", "2025-09-02 10:12:44 +0800", "feat: 初始化 CLI 骨架"),
+    ("1b7d4e9", "Wiston", "wiston@example.com", "2025-09-02 21:40:03 +0800", "feat: 支持 --json 输出"),
+    ("c04a2f7", "Ada", "ada@example.com", "2025-09-05 09:03:12 +0800", "test: 补齐解析器用例"),
+    ("52e9b81", "Wiston", "wiston@example.com", "2025-10-11 14:28:51 +0800", "refactor: 拆分 stats 模块"),
+    ("d7c31a4", "Bob", "bob@example.com", "2025-10-11 23:58:07 +0800", "fix: 时区偏移导致小时统计错位"),
+    ("9a6f0b2", "Wiston", "wiston@example.com", "2025-10-12 08:15:33 +0800", "docs: README 增加示例输出"),
+    ("3e58c9d", "Ada", "ada@example.com", "2025-11-03 19:44:20 +0800", "feat: 最长连续提交天数"),
+    ("b12d7f6", "Wiston", "wiston@example.com", "2025-11-04 22:31:09 +0800", "ci: 补 windows 矩阵"),
+    ("6c90e35", "Wiston", "wiston@example.com", "2025-11-18 11:07:55 +0800", "chore: 发布 0.1.0"),
+]
+
+
+def main() -> None:
+    target = pathlib.Path(__file__).resolve().parents[1] / "examples" / "sample_gitlog.txt"
+    target.parent.mkdir(parents=True, exist_ok=True)
+    payload = "".join(FIELD_SEP.join(row) + RECORD_SEP for row in ROWS)
+    target.write_text(payload, encoding="utf-8", newline="")
+    print(f"wrote {target} ({len(ROWS)} commits, {len(payload)} chars)")
+
+
+if __name__ == "__main__":
+    main()
