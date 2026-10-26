@@ -7,7 +7,7 @@ name = "gitlog-stats"
 version = "0.1.0"
 description = "Report activity from a git history: authors, months, hours, streaks."
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 license = { text = "MIT" }
 authors = [{ name = "Wiston" }]
 keywords = ["git", "cli", "statistics", "productivity", "report"]
